@@ -12,7 +12,7 @@ import com.laioffer.jupiter.external.TwitchException;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 
-@WebServlet(name = "GameServlet", urlPatterns = "/game")
+@WebServlet(name = "GameServlet", urlPatterns = {"/game"})
 public class GameServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
