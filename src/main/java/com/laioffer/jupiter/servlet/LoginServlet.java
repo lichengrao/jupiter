@@ -13,6 +13,22 @@ import java.io.IOException;
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+        // Else return userId in response body
+        String userId = (String) session.getAttribute("user_id");
+        String username = (String) session.getAttribute("username");
+        LoginResponseBody loginResponseBody = new LoginResponseBody(userId, username);
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().print(new ObjectMapper().writeValueAsString(loginResponseBody));
+    }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
@@ -44,6 +60,7 @@ public class LoginServlet extends HttpServlet {
             // Create a new session, put user ID as an attribute into the session object, and set the expiration time to 600 seconds.
             HttpSession session = request.getSession();
             session.setAttribute("user_id", body.getUserId());
+            session.setAttribute("username", username);
             session.setMaxInactiveInterval(600);
 
             LoginResponseBody loginResponseBody = new LoginResponseBody(body.getUserId(), username);
