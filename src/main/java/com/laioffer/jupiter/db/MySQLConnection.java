@@ -4,6 +4,9 @@ import com.laioffer.jupiter.entity.Item;
 import com.laioffer.jupiter.entity.ItemType;
 import com.laioffer.jupiter.entity.User;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.*;
 
@@ -13,8 +16,9 @@ public class MySQLConnection {
     //Create a connection to the MySQL database.
     public MySQLConnection() throws MySQLException {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            conn = DriverManager.getConnection(MySQLDBUtil.getMySQLAddress());
+            Context context = new InitialContext();
+            DataSource datasource = (DataSource) context.lookup("java:comp/env/jdbc/jupiterDB");
+            conn = datasource.getConnection();
         } catch (Exception e) {
             e.printStackTrace();
             throw new MySQLException("Failed to connect to database");
