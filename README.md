@@ -1,4 +1,7 @@
-# my-twitch-rec
-Backend for twitch rec service
+# My Twitch Rec
 
-Frontend code [here](https://github.com/lichengrao/jupiter-front-end)
+My Twitch Rec is a personalized Twitch resources recommendation engine.
+
+Check out [live](https://twitch.chanrao.dev)
+
+Frontend [here](https://github.com/lichengrao/my-twitch-rec-frontend)
